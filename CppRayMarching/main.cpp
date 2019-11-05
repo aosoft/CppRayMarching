@@ -11,9 +11,17 @@
 
 int main(void)
 {
-	cv::Mat img;
+	cv::Mat img(768, 1024, CV_32FC4);
+
+	for (int y = 0; y < img.rows; y++)
+	{
+		for (int x = 0; x < img.cols; x++)
+		{
+			*img.ptr <glm::vec4>(y, x) = glm::vec4((float)x / (float)img.cols, (float)y / (float)img.rows, 0.0f, 1.0f);
+		}
+	}
 
 	cv::namedWindow("Window", cv::WINDOW_AUTOSIZE | cv::WINDOW_FREERATIO);
-	//cv::imshow("Window", img);
+	cv::imshow("Window", img);
 	cv::waitKey(0);
 }
