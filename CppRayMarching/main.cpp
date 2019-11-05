@@ -8,20 +8,23 @@
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include "kernel.h"
+
+void kernel(glm::vec4& gl_FragColor, const glm::vec2 gl_FragCoord, float time, const glm::vec2 resolution)
+{
+	gl_FragColor = glm::vec4(gl_FragCoord, 0.0f, 1.0f);
+}
 
 int main(void)
 {
-	cv::Mat img(768, 1024, CV_32FC4);
+	cv::Mat imgRGB(768, 1024, CV_32FC4);
+	cv::Mat imgBGR(imgRGB);
 
-	for (int y = 0; y < img.rows; y++)
-	{
-		for (int x = 0; x < img.cols; x++)
-		{
-			*img.ptr <glm::vec4>(y, x) = glm::vec4((float)x / (float)img.cols, (float)y / (float)img.rows, 0.0f, 1.0f);
-		}
-	}
+	RunKernel(imgRGB.cols, imgRGB.rows, imgRGB.ptr(), imgRGB.step, kernel);
+
+	cv::cvtColor(imgRGB, imgBGR, cv::COLOR_RGBA2BGRA);
 
 	cv::namedWindow("Window", cv::WINDOW_AUTOSIZE | cv::WINDOW_FREERATIO);
-	cv::imshow("Window", img);
+	cv::imshow("Window", imgBGR);
 	cv::waitKey(0);
 }
