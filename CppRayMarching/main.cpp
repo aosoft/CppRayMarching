@@ -9,11 +9,13 @@
 #include <chrono>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include "kernel.h"
 
-void kernel(glm::vec4& gl_FragColor, const glm::vec2 gl_FragCoord, float time, const glm::vec2 resolution)
+#include "kernel.h"
+#include "RayMarching.h"
+
+void kernel(glm::vec4& gl_FragColor, const glm::vec4& gl_FragCoord, float time, const glm::vec2 resolution)
 {
-	gl_FragColor = glm::vec4(gl_FragCoord, sin(3.14 * time), 1.0f);
+	gl_FragColor = glm::vec4(gl_FragCoord.xy() / resolution, sin(3.14 * time), 1.0f);
 }
 
 class Timer
@@ -45,7 +47,7 @@ int main(void)
 	{
 		Timer sw;
 		RunKernelParallel(
-			imgRGB.cols, imgRGB.rows, imgRGB.ptr(), imgRGB.step, timer.Current(), kernel);
+			imgRGB.cols, imgRGB.rows, imgRGB.ptr(), imgRGB.step, timer.Current(), Sphere);
 		char tmp[256];
 		sprintf(tmp, "%f [sec]", sw.Current());
 

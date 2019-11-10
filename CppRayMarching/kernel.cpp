@@ -14,7 +14,7 @@ void RunKernelSingle(std::int32_t width, std::int32_t height, void* p, std::int3
 		auto p2 = reinterpret_cast<glm::vec4*>(static_cast<std::uint8_t*>(p) + y * stride);
 		for (std::int32_t x = 0; x < width; x++)
 		{
-			fnKernel(*p2, glm::vec2(static_cast<float>(x) / resolution.x, static_cast<float>(y) / resolution.y), time, resolution);
+			fnKernel(*p2, glm::vec4(static_cast<float>(x), static_cast<float>(y), 0.0f, 0.0f), time, resolution);
 			p2++;
 		}
 	}
@@ -43,7 +43,7 @@ void RunKernelParallel(std::int32_t width, std::int32_t height, void* p, std::in
 					auto p2 = reinterpret_cast<glm::vec4*>(static_cast<std::uint8_t*>(p) + yy * stride);
 					for (std::int32_t x = 0; x < width; x++)
 					{
-						fnKernel(*p2, glm::vec2(static_cast<float>(x) / resolution.x, static_cast<float>(yy) / resolution.y), time, resolution);
+						fnKernel(*p2, glm::vec4(static_cast<float>(x), static_cast<float>(yy), 0.0f, 0.0f), time, resolution);
 						p2++;
 					}
 				}
@@ -66,7 +66,7 @@ void RunKernelParallelOpenCV(std::int32_t width, std::int32_t height, void* p, s
 				auto p2 = reinterpret_cast<glm::vec4*>(static_cast<std::uint8_t*>(p) + y * stride);
 				for (std::int32_t x = 0; x < width; x++)
 				{
-					fnKernel(*p2, glm::vec2(static_cast<float>(x) / resolution.x, static_cast<float>(y) / resolution.y), time, resolution);
+					fnKernel(*p2, glm::vec4(static_cast<float>(x), static_cast<float>(y), 0.0f, 0.0f), time, resolution);
 					p2++;
 				}
 			}
