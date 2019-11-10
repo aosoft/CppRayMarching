@@ -46,7 +46,11 @@ int main(void)
 	while (cv::waitKey(1) < 0)
 	{
 		Timer sw;
+#if _DEBUG
+		RunKernelSingle(
+#else
 		RunKernelParallel(
+#endif
 			imgRGB.cols, imgRGB.rows, imgRGB.ptr(), imgRGB.step, timer.Current(), Sphere);
 		char tmp[256];
 		sprintf(tmp, "%f [sec]", sw.Current());

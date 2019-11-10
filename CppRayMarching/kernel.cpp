@@ -11,7 +11,7 @@ void RunKernelSingle(std::int32_t width, std::int32_t height, void* p, std::int3
 	//#pragma omp parallel for
 	for (std::int32_t y = 0; y < height; y++)
 	{
-		auto p2 = reinterpret_cast<glm::vec4*>(static_cast<std::uint8_t*>(p) + y * stride);
+		auto p2 = reinterpret_cast<glm::vec4*>(static_cast<std::uint8_t*>(p) + (height - y - 1) * stride);
 		for (std::int32_t x = 0; x < width; x++)
 		{
 			fnKernel(*p2, glm::vec4(static_cast<float>(x), static_cast<float>(y), 0.0f, 0.0f), time, resolution);
@@ -40,7 +40,7 @@ void RunKernelParallel(std::int32_t width, std::int32_t height, void* p, std::in
 					{
 						break;
 					}
-					auto p2 = reinterpret_cast<glm::vec4*>(static_cast<std::uint8_t*>(p) + yy * stride);
+					auto p2 = reinterpret_cast<glm::vec4*>(static_cast<std::uint8_t*>(p) + (height - yy - 1) * stride);
 					for (std::int32_t x = 0; x < width; x++)
 					{
 						fnKernel(*p2, glm::vec4(static_cast<float>(x), static_cast<float>(yy), 0.0f, 0.0f), time, resolution);
@@ -63,7 +63,7 @@ void RunKernelParallelOpenCV(std::int32_t width, std::int32_t height, void* p, s
 			auto resolution = glm::vec2(static_cast<float>(width), static_cast<float>(height));
 			for (std::int32_t y = range.start; y < range.end; y++)
 			{
-				auto p2 = reinterpret_cast<glm::vec4*>(static_cast<std::uint8_t*>(p) + y * stride);
+				auto p2 = reinterpret_cast<glm::vec4*>(static_cast<std::uint8_t*>(p) + (height - y - 1) * stride);
 				for (std::int32_t x = 0; x < width; x++)
 				{
 					fnKernel(*p2, glm::vec4(static_cast<float>(x), static_cast<float>(y), 0.0f, 0.0f), time, resolution);
