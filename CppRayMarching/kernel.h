@@ -1,5 +1,7 @@
 #pragma once
 
+#define ENABLE_POSTPROCESS
+
 #include <cstdint>
 #include <glm/glm.hpp>
 

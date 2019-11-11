@@ -3,13 +3,13 @@
 
 using namespace glm;
 
-float distanceFunc(vec3 pos)
+static float distanceFunc(vec3 pos)
 {
 	const float sphereSize = 1.0;
 	return length(pos) - sphereSize;
 }
 
-vec3 normalFunc(vec3 pos)
+static vec3 normalFunc(vec3 pos)
 {
 	float delta = 0.001;
 	return normalize(vec3(
@@ -17,8 +17,6 @@ vec3 normalFunc(vec3 pos)
 		distanceFunc(pos - vec3(0.0, delta, 0.0)) - distanceFunc(pos),
 		distanceFunc(pos - vec3(0.0, 0.0, delta)) - distanceFunc(pos)));
 }
-
-
 
 void Sphere(vec4& gl_FragColor, const vec4& gl_FragCoord, float time, const vec2 resolution)
 {
