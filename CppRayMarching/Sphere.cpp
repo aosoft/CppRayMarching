@@ -40,10 +40,9 @@ void Sphere(vec4& gl_FragColor, const vec4& gl_FragCoord, float time, const vec2
 		if (abs(distance) < 0.001)
 		{
 			vec3 norm = normalFunc(rPos);
-			vec3 light = normalize(vec3(1.0, 1.0, -1.0));
+			vec3 light = normalize(vec3(sin(time), 0.0, -1.0 * cos(time)));
 			float d = dot(norm, light);
-
-			gl_FragColor = vec4(vec3(1.0) * d, 1.0);
+			gl_FragColor = vec4(vec3(1.0 * d), 1.0);
 			return;
 		}
 
