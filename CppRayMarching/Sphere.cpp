@@ -20,7 +20,7 @@ static vec3 normalFunc(vec3 pos)
 
 void Sphere(vec4& gl_FragColor, const vec4& gl_FragCoord, float time, const vec2 resolution)
 {
-	vec2 p = (gl_FragCoord.xy() * vec2(2.0, 2.0) - resolution) / min(resolution.x, resolution.y);
+	vec2 p = (gl_FragCoord.xy() * 2.0f - resolution) / min(resolution.x, resolution.y);
 
 	vec3 cPos = vec3(0.0, 0.0, 2.0);
 	vec3 cDir = vec3(0.0, 0.0, -1.0);
@@ -39,8 +39,8 @@ void Sphere(vec4& gl_FragColor, const vec4& gl_FragCoord, float time, const vec2
 		{
 			vec3 norm = normalFunc(rPos);
 			vec3 light = normalize(vec3(sin(time), 0.0, -1.0 * cos(time)));
-			float d = dot(norm, light);
-			gl_FragColor = vec4(vec3(1.0 * d), 1.0);
+			float d = clamp(dot(norm, light), 0.05f, 1.0f);
+			gl_FragColor = vec4(vec3(0.0, 0.5, 1.0) * d, 1.0);
 			return;
 		}
 
