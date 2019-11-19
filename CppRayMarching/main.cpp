@@ -1,5 +1,7 @@
 #include "pch.h"
 
+#define REALTIME_MODE
+
 #ifdef _DEBUG
 #pragma comment(lib, "opencv_world411d.lib")
 #else
@@ -34,12 +36,30 @@ public:
 	}
 };
 
+class FrameCounter
+{
+private:
+	const std::int32_t fps = 60;
+	std::int32_t _counter;
+
+public:
+	FrameCounter() : _counter(60)
+	{
+	}
+
+	float Current()
+	{
+		auto current = ++_counter;
+		return static_cast<float>(current / fps) + static_cast<float>(current % fps) / fps;
+	}
+};
+
 inline float LinearToSRGB(float value)
 {
 	if (value < 0.0f)
 	{
 		return 0.0f;
-	}
+	}	
 	return value < 0.0031308f ? 12.92f * value : 1.055f * pow(value, 1.0f / 2.4f) - 0.055f;
 }
 
@@ -49,7 +69,11 @@ int main(void)
 
 	cv::namedWindow("Window", cv::WINDOW_AUTOSIZE | cv::WINDOW_FREERATIO);
 
+#ifdef REALTIME_MODE
 	Timer timer;
+#else
+	FrameCounter timer;
+#endif
 	while (cv::waitKey(1) < 0)
 	{
 		Timer sw;
@@ -58,7 +82,7 @@ int main(void)
 #else
 		RunKernelParallel(
 #endif
-			img.cols, img.rows, img.ptr(), img.step, timer.Current(), Sphere);
+			img.cols, img.rows, img.ptr(), img.step, timer.Current(), HologramBoxes);
 		char tmp[256];
 		sprintf(tmp, "%f [sec]", sw.Current());
 
