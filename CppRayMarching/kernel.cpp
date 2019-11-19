@@ -1,8 +1,11 @@
 #include "pch.h"
+
+#include "defines.h"
 #include "kernel.h"
 #include <atomic>
 #include <thread>
 #include <future>
+
 
 #ifdef ENABLE_POSTPROCESS
 

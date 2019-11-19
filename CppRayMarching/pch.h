@@ -3,6 +3,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define GLM_FORCE_SWIZZLE
 
+#include "defines.h"
+
 #include <cstdint>
 #include <chrono>
 #include <atomic>
