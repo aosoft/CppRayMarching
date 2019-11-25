@@ -9,13 +9,17 @@
 
 #ifdef ENABLE_POSTPROCESS
 
-inline float LinearToSRGB(float value)
+inline float PostProcess(float value)
 {
+#ifdef ENABLE_POSTPROCESS_LINEAR_TO_SRGB
 	if (value < 0.0f)
 	{
 		return 0.0f;
 	}
 	return value < 0.0031308f ? 12.92f * value : 1.055f * pow(value, 1.0f / 2.4f) - 0.055f;
+#else
+	return std::max(0.0f, value);
+#endif
 }
 
 #endif
@@ -33,7 +37,7 @@ void RunKernelSingle(std::int32_t width, std::int32_t height, void* p, std::int3
 #ifdef ENABLE_POSTPROCESS
 			glm::vec4 tmp;
 			fnKernel(tmp, glm::vec4(static_cast<float>(x), static_cast<float>(y), 0.0f, 0.0f), time, resolution);
-			*p2 = glm::vec4(LinearToSRGB(tmp.z), LinearToSRGB(tmp.y), LinearToSRGB(tmp.x), tmp.w);
+			*p2 = glm::vec4(PostProcess(tmp.z), PostProcess(tmp.y), PostProcess(tmp.x), tmp.w);
 #else
 			fnKernel(*p2, glm::vec4(static_cast<float>(x), static_cast<float>(y), 0.0f, 0.0f), time, resolution);
 #endif
@@ -68,7 +72,7 @@ void RunKernelParallel(std::int32_t width, std::int32_t height, void* p, std::in
 #ifdef ENABLE_POSTPROCESS
 						glm::vec4 tmp;
 						fnKernel(tmp, glm::vec4(static_cast<float>(x), static_cast<float>(yy), 0.0f, 0.0f), time, resolution);
-						*p2 = glm::vec4(LinearToSRGB(tmp.z), LinearToSRGB(tmp.y), LinearToSRGB(tmp.x), tmp.w);
+						*p2 = glm::vec4(PostProcess(tmp.z), PostProcess(tmp.y), PostProcess(tmp.x), tmp.w);
 #else
 						fnKernel(*p2, glm::vec4(static_cast<float>(x), static_cast<float>(yy), 0.0f, 0.0f), time, resolution);
 #endif
@@ -97,7 +101,7 @@ void RunKernelParallelOpenCV(std::int32_t width, std::int32_t height, void* p, s
 #ifdef ENABLE_POSTPROCESS
 					glm::vec4 tmp;
 					fnKernel(tmp, glm::vec4(static_cast<float>(x), static_cast<float>(y), 0.0f, 0.0f), time, resolution);
-					*p2 = glm::vec4(LinearToSRGB(tmp.z), LinearToSRGB(tmp.y), LinearToSRGB(tmp.x), tmp.w);
+					*p2 = glm::vec4(PostProcess(tmp.z), PostProcess(tmp.y), PostProcess(tmp.x), tmp.w);
 #else
 					fnKernel(*p2, glm::vec4(static_cast<float>(x), static_cast<float>(y), 0.0f, 0.0f), time, resolution);
 #endif

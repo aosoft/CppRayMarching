@@ -2,6 +2,7 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 #define GLM_FORCE_SWIZZLE
+#define GLM_FORCE_INTRINSICS
 
 #include "defines.h"
 
