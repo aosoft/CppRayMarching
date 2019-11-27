@@ -74,8 +74,9 @@ int main(int argc, const char** argv)
 		switch (atoi(argv[1]))
 		{
 		case 0: fnKernel = Sphere; break;
-		case 1: fnKernel = KaleidoscopeTunnel; break;
-		case 2: fnKernel = HologramBoxes; break;
+		case 1: fnKernel = ColorBox; break;
+		case 2: fnKernel = KaleidoscopeTunnel; break;
+		case 3: fnKernel = HologramBoxes; break;
 		}
 	}
 

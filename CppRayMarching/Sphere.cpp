@@ -3,13 +3,13 @@
 
 using namespace glm;
 
-float distanceFunc(vec3 pos)
+static float distanceFunc(vec3 pos)
 {
 	const float sphereSize = 1.0;
 	return length(pos) - sphereSize;
 }
 
-vec3 normalFunc(vec3 pos)
+static vec3 normalFunc(vec3 pos)
 {
 	const float delta = 0.001;
 	return normalize(vec3(

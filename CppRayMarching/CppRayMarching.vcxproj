@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ColorBox.cpp" />
     <ClCompile Include="HologramBoxes.cpp" />
     <ClCompile Include="KaleidoscopeTunnel.cpp" />
     <ClCompile Include="kernel.cpp" />
