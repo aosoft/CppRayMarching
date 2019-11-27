@@ -16,7 +16,7 @@ inline float rand(vec2 n) {
 	return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453f);
 }
 
-static float noise(vec2 p) {
+inline float noise(vec2 p) {
 	vec2 ip = floor(p);
 	vec2 u = fract(p);
 	u = u * u * (3.0f - 2.0f * u);
@@ -27,7 +27,7 @@ static float noise(vec2 p) {
 	return res * res;
 }
 
-static float fbm(vec2 p) {
+inline float fbm(vec2 p) {
 	float r = 0.0;
 	float amp = 1.0;
 	float freq = 1.0;
@@ -52,7 +52,7 @@ inline float cio(float t) {
 		: 0.5f * (sqrt((3.0f - 2.0f * t) * (2.0f * t - 1.0f)) + 1.0f);
 }
 
-static float animHeight(vec2 p, float iTime)
+inline float animHeight(vec2 p, float iTime)
 {
 	float s = 0., hs = 1.;
 	float t = mod(iTime, 7.f);
@@ -87,7 +87,7 @@ inline vec2 rep(vec2 p, vec2 c)
 	return mod(p, c) - 0.5f * c;
 }
 
-static float map(vec3 p, float iTime)
+inline float map(vec3 p, float iTime)
 {
 	float bd = length(p.xz()) - 5.0f;
 	if (bd > 0.1) {
@@ -101,7 +101,7 @@ static float map(vec3 p, float iTime)
 	return max(box, bd) * .5;
 }
 
-static vec2 trace(vec3 p, vec3 ray, float mx, float iTime)
+inline vec2 trace(vec3 p, vec3 ray, float mx, float iTime)
 {
 	float t = 0.0;
 	vec3 pos;
@@ -117,7 +117,7 @@ static vec2 trace(vec3 p, vec3 ray, float mx, float iTime)
 	return vec2(t, dist);
 }
 
-static vec3 getColor(vec3 p, vec3 ray, float iTime)
+inline vec3 getColor(vec3 p, vec3 ray, float iTime)
 {
 	vec2 t = trace(p, ray, 100.0, iTime);
 	vec3 pos = p + ray * t.x;
@@ -127,7 +127,7 @@ static vec3 getColor(vec3 p, vec3 ray, float iTime)
 	return max(vec3(0.2, 0.5, 0.8) * 7.0f * pow(pos.y, 4.0f) * smoothstep(0.0f, -1.0f, length(pos.xz()) - 5.0f), vec3(0.0));
 }
 
-static mat3 camera(vec3 ro, vec3 ta, float cr)
+inline mat3 camera(vec3 ro, vec3 ta, float cr)
 {
 	vec3 cw = normalize(ta - ro);
 	vec3 cp = vec3(sin(cr), cos(cr), 0.);
@@ -141,7 +141,7 @@ inline float luminance(vec3 col)
 	return dot(vec3(0.3, 0.6, 0.1), col);
 }
 
-static vec3 acesFilm(const vec3 x) {
+inline vec3 acesFilm(const vec3 x) {
 	const float a = 2.51;
 	const float b = 0.03;
 	const float c = 2.43;

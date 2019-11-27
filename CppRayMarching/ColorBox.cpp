@@ -3,7 +3,7 @@
 
 using namespace glm;
 
-static mat3 rotationMatrixY(float angle) {
+inline mat3 rotationMatrixY(float angle) {
 	float c = cos(angle);
 	float s = sin(angle);
 	return mat3(
@@ -12,7 +12,7 @@ static mat3 rotationMatrixY(float angle) {
 		-s, 0.0, c);
 }
 
-static mat3 rotationMatrixZ(float angle) {
+inline mat3 rotationMatrixZ(float angle) {
 	float c = cos(angle);
 	float s = sin(angle);
 	return mat3(
@@ -21,19 +21,19 @@ static mat3 rotationMatrixZ(float angle) {
 		0.0, 0.0, 1.0);
 }
 
-static vec3 hsv2rgb(vec3 c) {
+inline vec3 hsv2rgb(vec3 c) {
 	vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
 	vec3 p = abs(fract(c.xxx + K.xyz) * 6.0f - K.www);
 	return c.z * mix(K.xxx(), clamp(p - K.xxx, 0.0f, 1.0f), c.y);
 }
 
-static float distanceFunc(vec3 pos)
+inline float distanceFunc(vec3 pos)
 {
 	pos = mod(pos, 4.0f) - 2.0f;
 	return length(max(abs(pos) - vec3(1.0, 1.0, 1.0), 0.0f));
 }
 
-static vec3 normalFunc(vec3 pos)
+inline vec3 normalFunc(vec3 pos)
 {
 	const float delta = 0.001;
 	return normalize(vec3(

@@ -6,7 +6,7 @@ using namespace glm;
 static float distanceFunc(vec3 pos)
 {
 	const float sphereSize = 1.0;
-	return length(pos) - sphereSize;
+	return length(pos) - 1.0f;
 }
 
 static vec3 normalFunc(vec3 pos)

@@ -16,7 +16,7 @@ inline mat2 rot(float x)
 	return mat2(cos(x), sin(x), -sin(x), cos(x));
 }
 
-vec2 foldRotate(vec2& p, float s) {
+inline vec2 foldRotate(vec2& p, float s) {
 	float a = PI / s - atan(p.x, p.y);
 	float n = PI * 2. / s;
 	a = floor(a / n) * n;
@@ -24,7 +24,7 @@ vec2 foldRotate(vec2& p, float s) {
 	return p;
 }
 
-float sdRect(vec2 p, vec2 b)
+inline float sdRect(vec2 p, vec2 b)
 {
 	vec2 d = abs(p) - b;
 	return min(max(d.x, d.y), 0.0f) + length(max(d, 0.0f));
@@ -32,7 +32,7 @@ float sdRect(vec2 p, vec2 b)
 
 // TheGrid by dila
 // https://www.shadertoy.com/view/llcXWr
-float tex(vec2 p, float z)
+inline float tex(vec2 p, float z)
 {
 	p = foldRotate(p, 8.0);
 	vec2 q = (fract(p / 10.0f) - 0.5f) * 10.0f;
@@ -52,7 +52,7 @@ float tex(vec2 p, float z)
 
 // The Drive Home by BigWings
 // https://www.shadertoy.com/view/MdfBRX
-float Bokeh(vec2 p, vec2 sp, float size, float mi, float blur)
+inline float Bokeh(vec2 p, vec2 sp, float size, float mi, float blur)
 {
 	float d = length(p - sp);
 	float c = smoothstep(size, size * (1.f - blur), d);
@@ -60,12 +60,12 @@ float Bokeh(vec2 p, vec2 sp, float size, float mi, float blur)
 	return c;
 }
 
-vec2 hash(vec2 p) {
+inline vec2 hash(vec2 p) {
 	p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
 	return fract(sin(p) * 43758.5453f) * 2.0f - 1.0f;
 }
 
-float dirt(vec2 uv, float n)
+inline float dirt(vec2 uv, float n)
 {
 	vec2 p = fract(uv * n);
 	vec2 st = (floor(uv * n) + 0.5f) / n;
@@ -73,7 +73,7 @@ float dirt(vec2 uv, float n)
 	return Bokeh(p, vec2(0.5, 0.5) + vec2(0.2) * rnd, 0.05, abs(rnd.y * 0.4) + 0.3, 0.25 + rnd.x * rnd.y * 0.2);
 }
 
-float sm(float start, float end, float t, float smo)
+inline float sm(float start, float end, float t, float smo)
 {
 	return smoothstep(start, start + smo, t) - smoothstep(end - smo, end, t);
 }
